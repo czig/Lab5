@@ -3,30 +3,30 @@
 
 #define TRUE 1
 
-void configureP1PinAsButton(char pin)
+void configureP2PinAsButton(char pin)
 {
-    P1DIR &= ~pin;
-    P1OUT |= pin;
-    P1REN |= pin;
+    P2DIR &= ~pin;
+    P2OUT |= pin;
+    P2REN |= pin;
 }
 
-char isP1ButtonReleased(char pin)
+char isP2ButtonReleased(char pin)
 {
-    return P1IN & pin;
+    return P2IN & pin;
 }
 
-void waitForP1ButtonRelease(char pin)
+void waitForP2ButtonRelease(char pin)
 {
-    while (!isP1ButtonReleased(pin)) {}
+    while (!isP2ButtonReleased(pin)) {}
     debounce();
 }
 
-char isP1ButtonPressed(char pin)
+char isP2ButtonPressed(char pin)
 {
-    return !(P1IN & pin);
+    return !(P2IN & pin);
 }
 
-char pollP1Buttons(char buttonsToPoll[], char numberOfButtonsToPoll)
+char pollP2Buttons(char buttonsToPoll[], char numberOfButtonsToPoll)
 {
     int i;
 
