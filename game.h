@@ -5,6 +5,8 @@
 // Description: Header file for game
 //
 #include <msp430.h>
+#include "lcd.h"
+#include "button.h"
 #ifndef GAME_H_
 #define GAME_H_
 #define UP 1
@@ -25,6 +27,10 @@ void clearPlayer (unsigned char position);
 void updatePlayer (unsigned char position);
 
 void movePlayer (unsigned char position, unsigned char direction);
+
+void clearTimer();
+
+void movePlayerforButtonPush(char buttonToTest);
 
 void testAndRespondToButtonPush(char buttonToTest);
 

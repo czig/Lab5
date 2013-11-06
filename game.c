@@ -8,8 +8,11 @@
 #include <msp430.h>
 #include "game.h"
 #include "lcd.h"
+#include "button.h"
+
 #ifndef GAME_H_
 #define GAME_H_
+f
 #define UP 1
 #define LEFT 2
 #define RIGHT 3
@@ -76,23 +79,8 @@ void movePlayer(unsigned char position, unsigned char direction)
 			case DOWN;
 				position |= BIT6;
 				break;
+	updatePlayer(position);
 			}
 }
 
-void testAndRespondToButtonPush(char buttonToTest) //Have to edit this function
-{
-    if (buttonToTest & P2IFG)
-    {
-        if (buttonToTest & P2IES)
-        {
-            movePlayerInResponseToButtonPush(buttonToTest);
-            clearTimer();
-        } else
-        {
-            debounce();
-        }
 
-        P1IES ^= buttonToTest;
-        P1IFG &= ~buttonToTest;
-    }
-}
