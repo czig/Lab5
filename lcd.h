@@ -8,6 +8,9 @@
 #ifndef LCD_H_
 #define LCD_H_
 
+void writeCommandByte(char commandByte);
+void writeDataByte(char dataByte);
+
 //Initializes SPI by setting up ports and pins
 void initSPI();
 

@@ -11,11 +11,11 @@
 
 char LCDCON = 0;
 
-void writeDataByte(char dataByte);
+
 
 void writeCommandNibble(char commandNibble);
 
-void writeCommandByte(char commandByte);
+
 
 void set_SS_hi();
 

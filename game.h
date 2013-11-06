@@ -10,11 +10,16 @@
 
 void initTimer();
 
-void initPlayer ();
+char initPlayer ();
 
 void clearPlayer (unsigned char position);
 
-void movePlayer (unsigned char position);
+void updatePlayer (unsigned char position);
+
+void movePlayer (unsigned char position, unsigned char direction);
+
+
+
 
 
 

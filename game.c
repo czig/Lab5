@@ -8,6 +8,10 @@
 #include <msp430.h>
 #include "game.h"
 #include "lcd.h"
+#define UP 1
+#define LEFT 2
+#define RIGHT 3
+#define DOWN 4
 
 void initTimer()
 {
@@ -17,12 +21,12 @@ void initTimer()
 	TACTL |= ID1|ID0;
 	TACTL &= ~TAIFG;
 	TACTL |= MC1;
-	TACTL |= TAIE:
+	TACTL |= TAIE;
 }
 
-void initPlayer()
+char initPlayer()
 {
-	position = 0x80;
+	return 0x80;
 }
 
 void clearPlayer(unsigned char position)
@@ -31,8 +35,26 @@ void clearPlayer(unsigned char position)
 	writeString(" ");
 }
 
-void movePlayer(unsigned char position)
+void updatePlayer(unsigned char position)
 {
 	writeCommandByte(position);
 	writeString("*");
 }
+
+//void movePlayer(unsigned char position, unsigned char direction)
+//{
+	//switch (direction) {
+		//	case UP:
+			//	scrollString(string1,string2);
+				//break;
+			//case LEFT:
+			//	scrollString(string1,string3);
+			//	break;
+			//case RIGHT:
+			//	scrollString(string1,string4);
+			//	break;
+		//	case DOWN;
+
+			//	break;
+	//		}
+//}
