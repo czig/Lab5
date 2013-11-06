@@ -47,29 +47,43 @@ void updatePlayer(unsigned char position)
 	writeString("*");
 }
 
-//void movePlayer(unsigned char position, unsigned char direction)
-//{
-	//switch (direction) {
-		//	case UP:
-			//	scrollString(string1,string2);
-				//break;
-			//case LEFT:
-			//	scrollString(string1,string3);
-			//	break;
-			//case RIGHT:
-			//	scrollString(string1,string4);
-			//	break;
-		//	case DOWN;
-
-			//	break;
-	//		}
-//}
-
-void testAndRespondToButtonPush(char buttonToTest)
+void movePlayer(unsigned char position, unsigned char direction)
 {
-    if (buttonToTest & P1IFG)
+	switch (direction) {
+			case UP:
+				position &= ~BIT6;
+				break;
+			case LEFT:
+				if (position > 0x80)
+				{
+					position--
+				}
+				if (position > 0xC0)
+				{
+					position--
+				}
+				break;
+			case RIGHT:
+				if (position < 0x87)
+				{
+					position++
+				}
+				if (position < 0xC7)
+				{
+					position++
+				}
+		    	break;
+			case DOWN;
+				position |= BIT6;
+				break;
+			}
+}
+
+void testAndRespondToButtonPush(char buttonToTest) //Have to edit this function
+{
+    if (buttonToTest & P2IFG)
     {
-        if (buttonToTest & P1IES)
+        if (buttonToTest & P2IES)
         {
             movePlayerInResponseToButtonPush(buttonToTest);
             clearTimer();

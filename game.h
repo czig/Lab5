@@ -26,7 +26,7 @@ void updatePlayer (unsigned char position);
 
 void movePlayer (unsigned char position, unsigned char direction);
 
-
+void testAndRespondToButtonPush(char buttonToTest);
 
 
 
