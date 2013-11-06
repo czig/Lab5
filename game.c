@@ -8,10 +8,16 @@
 #include <msp430.h>
 #include "game.h"
 #include "lcd.h"
+#ifndef GAME_H_
+#define GAME_H_
 #define UP 1
 #define LEFT 2
 #define RIGHT 3
 #define DOWN 4
+#define TRUE 1
+#define FALSE 0
+#define GAMEOVER 0
+#define PLAYON 1
 
 void initTimer()
 {
@@ -58,3 +64,21 @@ void updatePlayer(unsigned char position)
 			//	break;
 	//		}
 //}
+
+void testAndRespondToButtonPush(char buttonToTest)
+{
+    if (buttonToTest & P1IFG)
+    {
+        if (buttonToTest & P1IES)
+        {
+            movePlayerInResponseToButtonPush(buttonToTest);
+            clearTimer();
+        } else
+        {
+            debounce();
+        }
+
+        P1IES ^= buttonToTest;
+        P1IFG &= ~buttonToTest;
+    }
+}

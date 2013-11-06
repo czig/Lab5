@@ -7,6 +7,14 @@
 #include <msp430.h>
 #ifndef GAME_H_
 #define GAME_H_
+#define UP 1
+#define LEFT 2
+#define RIGHT 3
+#define DOWN 4
+#define TRUE 1
+#define FALSE 0
+#define GAMEOVER 0
+#define PLAYON 1
 
 void initTimer();
 
