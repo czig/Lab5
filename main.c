@@ -10,8 +10,6 @@
 #include "lcd.h"
 #include "button.h"
 #include "game.h"
-#ifndef GAME_H_
-#define GAME_H_
 #define UP 1
 #define LEFT 2
 #define RIGHT 3
@@ -37,19 +35,19 @@ void main(void) {
     initSPI();
     LCDinit();
     LCDclear();
-    configureP1PinAsButton(BIT1 | BIT2 | BIT3 | BIT4);
+    configureP2PinAsButton(BIT1 | BIT2 | BIT3 | BIT4);
     position = initPlayer();
     clearPlayer(position);
     updatePlayer(position);
     initTimer();
-    __enable_interrupts();
+    __enable_interrupt();
 
 
     while(1)
     {
     	if(timerflag ==1)
     	{
-    		flag = 0;
+    		timerflag = 0;
     		count ++;
     	}
     	if(count == 4)
@@ -108,7 +106,7 @@ void testAndRespondToButtonPush(char buttonToTest) //Have to edit this function
 }
 
 
-#pragma vector=TIMER0_A1_Vector
+#pragma vector = TIMER0_A1_VECTOR
 __interrupt void TIMER0_A1_ISR()
 {
 	TACTL &= ~TAIFG;
@@ -116,7 +114,7 @@ __interrupt void TIMER0_A1_ISR()
 }
 
 
-#pragma vector=PORT2_VECTOR
+#pragma vector = PORT2_VECTOR
 __interrupt void Port_2_ISR(void)
 {
     P2IFG &= ~(BIT1|BIT2|BIT3|BIT4);                         // clear interrupt flags

@@ -10,9 +10,6 @@
 #include "lcd.h"
 #include "button.h"
 
-#ifndef GAME_H_
-#define GAME_H_
-f
 #define UP 1
 #define LEFT 2
 #define RIGHT 3
@@ -59,28 +56,28 @@ void movePlayer(unsigned char position, unsigned char direction)
 			case LEFT:
 				if (position > 0x80)
 				{
-					position--
+					position--;
 				}
 				if (position > 0xC0)
 				{
-					position--
+					position--;
 				}
 				break;
 			case RIGHT:
 				if (position < 0x87)
 				{
-					position++
+					position++;
 				}
 				if (position < 0xC7)
 				{
-					position++
+					position++;
 				}
 		    	break;
-			case DOWN;
+			case DOWN:
 				position |= BIT6;
 				break;
-	updatePlayer(position);
 			}
+	updatePlayer(position);
 }
 
 
