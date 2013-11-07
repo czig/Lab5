@@ -33,7 +33,7 @@ char pollP2Buttons(char buttonsToPoll[], char numberOfButtonsToPoll)
     while (TRUE)
     {
         for (i = 0; i < numberOfButtonsToPoll; i++) {
-            if (isP1ButtonPressed(buttonsToPoll[i]))
+            if (isP2ButtonPressed(buttonsToPoll[i]))
             {
                 return buttonsToPoll[i];
             }

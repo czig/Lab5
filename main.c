@@ -35,7 +35,6 @@ void Start_Over(char buttonToTest);
 void main(void) {
     WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
 
-
     initSPI();
     LCDinit();
     LCDclear();
@@ -46,15 +45,14 @@ void main(void) {
     initTimer();
     __enable_interrupt();
 
-
-
     while(1)
     {
-    	if (timerflag ==1)
+    	if (timerflag == 1)
     	{
     		timerflag = 0;
-    		count ++;
+    		count++;
     	}
+
     	if(count >= 4)
     	{
     		TACTL &= ~TAIE;   //Disable timer interrupt
@@ -64,25 +62,11 @@ void main(void) {
     		writeString("Game    ");
     		MoveCursorLineTwo();
     		writeString("Over    ");
+    		__delay_cycles(10000);
+    		clearTimer();
+    		TACTL |= TAIE;
     	}
-    	if(buttonflag == 1)
-    	{
-    		buttonflag = 0;
-    		if(gameover == FALSE)
-    		{
-    			testAndRespondToButtonPush(BIT1);
-    			testAndRespondToButtonPush(BIT2);
-    			testAndRespondToButtonPush(BIT3);
-    			testAndRespondToButtonPush(BIT4);
-    		}
-    		else
-    		{
-    			Start_Over(BIT1);
-    			Start_Over(BIT2);
-    			Start_Over(BIT3);
-    			Start_Over(BIT4);
-    		}
-    	}
+
     	if(position == 0xC7)
     	{
     		TACTL &= ~TAIE;   //Disable timer interrupt
@@ -92,6 +76,9 @@ void main(void) {
     		writeString("You     ");
     		MoveCursorLineTwo();
     		writeString("Win     ");
+    		__delay_cycles(10000);
+    		clearTimer();
+    		TACTL |= TAIE;
     	}
     }
 
@@ -111,10 +98,10 @@ void initTimer()
 
 void initButtons(char pin)
 {
-	configureP2PinAsButton(pin);
-	P2IES |= pin;                          // configure interrupt to sense falling edges
-	P2IFG &= ~pin;                         // clear P2.1-2.4 interrupt flags
-	P2IE |= pin;                           // enable the interrupt for all pins
+	configureP2PinAsButton(BIT1|BIT2|BIT3|BIT4);
+	P2IES |= BIT1|BIT2|BIT3|BIT4;                          // configure interrupt to sense falling edges
+	P2IFG &= ~(BIT1|BIT2|BIT3|BIT4);                         // clear P2.1-2.4 interrupt flags
+	P2IE |= BIT1|BIT2|BIT3|BIT4;                           // enable the interrupt for all pins
 }
 
 void clearTimer()
@@ -171,6 +158,7 @@ void Start_Over(char buttonToTest)
 	            clearPlayer(position);
 	            updatePlayer(position);
 	            clearTimer(); //might have to be clear timer
+	            TACTL |= TAIE;
 
 	        } else
 	        {
@@ -193,5 +181,18 @@ __interrupt void TIMER0_A1_ISR()
 #pragma vector = PORT2_VECTOR
 __interrupt void Port_2_ISR(void)
 {
-    buttonflag = 1;
+		if(gameover == FALSE)
+		{
+			testAndRespondToButtonPush(BIT1);
+			testAndRespondToButtonPush(BIT2);
+			testAndRespondToButtonPush(BIT3);
+			testAndRespondToButtonPush(BIT4);
+		}
+		else
+		{
+			Start_Over(BIT1);
+			Start_Over(BIT2);
+			Start_Over(BIT3);
+			Start_Over(BIT4);
+		}
 }
