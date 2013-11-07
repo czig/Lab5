@@ -55,28 +55,32 @@ void main(void) {
 
     	if(count >= 4)
     	{
-    		TACTL &= ~TAIE;   //Disable timer interrupt
+    		TACTL &= ~TAIE;  //Disable timer interrupt
+    		__disable_interrupt();
     		LCDclear();
     	    gameover = TRUE;
     		MoveCursorLineOne();
     		writeString("Game    ");
     		MoveCursorLineTwo();
     		writeString("Over    ");
-    		__delay_cycles(10000);
+    		__enable_interrupt();
+    		__delay_cycles(1000);
     		clearTimer();
     		TACTL |= TAIE;
     	}
 
     	if(position == 0xC7)
     	{
-    		TACTL &= ~TAIE;   //Disable timer interrupt
+    		TACTL &= ~TAIE;  //Disable interrupts
+    		__disable_interrupt();
     		LCDclear();
     		gameover = TRUE;
     		MoveCursorLineOne();
     		writeString("You     ");
     		MoveCursorLineTwo();
     		writeString("Win     ");
-    		__delay_cycles(10000);
+    		__enable_interrupt();
+    		__delay_cycles(1000);
     		clearTimer();
     		TACTL |= TAIE;
     	}
