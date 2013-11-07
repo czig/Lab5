@@ -8,9 +8,6 @@ void configureP2PinAsButton(char pin)
     P2DIR &= ~pin;
     P2OUT |= pin;
     P2REN |= pin;
-    P2IES |= pin;                          // configure interrupt to sense falling edges
-    P2IFG &= ~pin;                         // clear P2.1-2.4 interrupt flags
-    P2IE |= pin;                           // enable the interrupt for all pins
 }
 
 char isP2ButtonReleased(char pin)

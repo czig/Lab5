@@ -19,17 +19,6 @@
 #define GAMEOVER 0
 #define PLAYON 1
 
-void initTimer()
-{
-	TACTL &= ~(MC1|MC0);
-	TACTL |= TACLR;
-	TACTL |= TASSEL1;
-	TACTL |= ID1|ID0;
-	TACTL &= ~TAIFG;
-	TACTL |= MC1;
-	TACTL |= TAIE;
-}
-
 char initPlayer()
 {
 	return 0x80;

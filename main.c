@@ -24,6 +24,8 @@ char buttonflag = 0;
 char timerflag = 0;
 char count = 0;
 
+void initTimer();
+void initButtons(char pin);
 void clearTimer();
 void movePlayerforButtonPush(char buttonToTest);
 void testAndRespondToButtonPush(char buttonToTest);
@@ -35,7 +37,7 @@ void main(void) {
     initSPI();
     LCDinit();
     LCDclear();
-    configureP2PinAsButton(BIT1 | BIT2 | BIT3 | BIT4);
+    initButtons(BIT1|BIT2|BIT3|BIT4);
     position = initPlayer();
     clearPlayer(position);
     updatePlayer(position);
@@ -57,11 +59,29 @@ void main(void) {
     		MoveCursorLineTwo();
     		writeString("Over");
     	}
-    };
+    }
 
 
 }
 
+void initTimer()
+{
+	TACTL &= ~(MC1|MC0);
+	TACTL |= TACLR;
+	TACTL |= TASSEL1;
+	TACTL |= ID1|ID0;
+	TACTL &= ~TAIFG;
+	TACTL |= MC1;
+	TACTL |= TAIE;
+}
+
+void initButtons(char pin)
+{
+	configureP2PinAsButton(pin);
+	P2IES |= pin;                          // configure interrupt to sense falling edges
+	P2IFG &= ~pin;                         // clear P2.1-2.4 interrupt flags
+	P2IE |= pin;                           // enable the interrupt for all pins
+}
 
 void clearTimer()
 {
