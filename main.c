@@ -23,12 +23,14 @@ unsigned char position = 0;
 char buttonflag = 0;
 char timerflag = 0;
 char count = 0;
+char gameover = FALSE;
 
 void initTimer();
 void initButtons(char pin);
 void clearTimer();
 void movePlayerforButtonPush(char buttonToTest);
 void testAndRespondToButtonPush(char buttonToTest);
+void Start_Over(char buttonToTest);
 
 void main(void) {
     WDTCTL = WDTPW | WDTHOLD;	// Stop watchdog timer
@@ -52,12 +54,32 @@ void main(void) {
     		timerflag = 0;
     		count ++;
     	}
-    	if(count == 4)
+    	if(count >= 4)
     	{
+    		TACTL &= ~TAIE;   //Disable timer interrupt
+    		LCDclear();
+    		gameover = TRUE;
     		MoveCursorLineOne();
     		writeString("Game");
     		MoveCursorLineTwo();
     		writeString("Over");
+    	}
+    	if(buttonflag ==1)
+    	{
+    		if(gameover == FALSE)
+    		{
+    			testAndRespondToButtonPush(BIT1);
+    			testAndRespondToButtonPush(BIT2);
+    			testAndRespondToButtonPush(BIT3);
+    			testAndRespondToButtonPush(BIT4);
+    		}
+    		else
+    		{
+    			Start_Over(BIT1);
+    			Start_Over(BIT2);
+    			Start_Over(BIT3);
+    			Start_Over(BIT4);
+    		}
     	}
     }
 
@@ -114,7 +136,7 @@ void testAndRespondToButtonPush(char buttonToTest) //Have to edit this function
         if (buttonToTest & P2IES)
         {
             movePlayerforButtonPush(buttonToTest);
-            clearTimer();
+            initTimer; //might have to be clear timer
         } else
         {
             debounce();
@@ -125,6 +147,28 @@ void testAndRespondToButtonPush(char buttonToTest) //Have to edit this function
     }
 }
 
+void Start_Over(char buttonToTest)
+{
+	if (buttonToTest & P2IFG)
+	    {
+	        if (buttonToTest & P2IES)
+	        {
+	            gameover = FALSE;
+	            LCDClear();
+	            position = initPlayer();
+	            clearPlayer(position);
+	            updatePlayer(position);
+	            initTimer(); //might have to be clear timer
+
+	        } else
+	        {
+	            debounce();
+	        }
+
+	        P2IES ^= buttonToTest;
+	        P2IFG &= ~buttonToTest;
+	    }
+}
 
 #pragma vector = TIMER0_A1_VECTOR
 __interrupt void TIMER0_A1_ISR()
