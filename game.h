@@ -26,7 +26,7 @@ void clearPlayer (unsigned char position);
 
 void updatePlayer (unsigned char position);
 
-void movePlayer (unsigned char position, unsigned char direction);
+unsigned char movePlayer (unsigned char position, unsigned char direction);
 
 void clearTimer();
 

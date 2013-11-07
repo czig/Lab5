@@ -49,38 +49,39 @@ void main(void) {
 
     while(1)
     {
-    	if(timerflag ==1)
-    	{
-    		timerflag = 0;
-    		count ++;
-    	}
-    	if(count >= 4)
-    	{
-    		TACTL &= ~TAIE;   //Disable timer interrupt
-    		LCDclear();
-    		gameover = TRUE;
-    		MoveCursorLineOne();
-    		writeString("Game");
-    		MoveCursorLineTwo();
-    		writeString("Over");
-    	}
-    	if(buttonflag ==1)
-    	{
-    		if(gameover == FALSE)
-    		{
-    			testAndRespondToButtonPush(BIT1);
-    			testAndRespondToButtonPush(BIT2);
-    			testAndRespondToButtonPush(BIT3);
-    			testAndRespondToButtonPush(BIT4);
-    		}
-    		else
-    		{
-    			Start_Over(BIT1);
-    			Start_Over(BIT2);
-    			Start_Over(BIT3);
-    			Start_Over(BIT4);
-    		}
-    	}
+    	//(timerflag ==1)
+    	//{
+    		//timerflag = 0;
+    		//count ++;
+    	//}
+    	//if(count >= 4)
+    	//{
+    		//TACTL &= ~TAIE;   //Disable timer interrupt
+    		//LCDclear();
+    		//gameover = TRUE;
+    		//MoveCursorLineOne();
+    		//writeString("Game");
+    		//MoveCursorLineTwo();
+    		//writeString("Over");
+    	//}
+    	//if(buttonflag ==1)
+    	//{
+    		//buttonflag = 0;
+    		//if(gameover == FALSE)
+    		//{
+    			//testAndRespondToButtonPush(BIT1);
+    			//testAndRespondToButtonPush(BIT2);
+    			//testAndRespondToButtonPush(BIT3);
+    			//testAndRespondToButtonPush(BIT4);
+    		//}
+    		//else
+    		//{
+    			//Start_Over(BIT1);
+    			//Start_Over(BIT2);
+    			//Start_Over(BIT3);
+    			//Start_Over(BIT4);
+    		//}
+    	//}
     }
 
 
@@ -116,16 +117,16 @@ void movePlayerforButtonPush(char buttonToTest)
 	switch(buttonToTest)
 	{
 		case BIT1:
-			movePlayer(position,UP);
+			position = movePlayer(position,UP);
 			break;
 		case BIT2:
-			movePlayer(position,LEFT);
+			position = movePlayer(position,LEFT);
 			break;
 		case BIT3:
-			movePlayer(position,RIGHT);
+			position = movePlayer(position,RIGHT);
 			break;
 		case BIT4:
-			movePlayer(position,DOWN);
+			position = movePlayer(position,DOWN);
 	}
 }
 
@@ -136,7 +137,7 @@ void testAndRespondToButtonPush(char buttonToTest) //Have to edit this function
         if (buttonToTest & P2IES)
         {
             movePlayerforButtonPush(buttonToTest);
-            initTimer; //might have to be clear timer
+            initTimer(); //might have to be clear timer
         } else
         {
             debounce();
@@ -154,7 +155,7 @@ void Start_Over(char buttonToTest)
 	        if (buttonToTest & P2IES)
 	        {
 	            gameover = FALSE;
-	            LCDClear();
+	            LCDclear();
 	            position = initPlayer();
 	            clearPlayer(position);
 	            updatePlayer(position);

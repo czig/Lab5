@@ -43,7 +43,7 @@ void initSPI() {
 	P1SEL |= BIT6;
 	P1SEL2 |= BIT6;         //Make UCAOSSOMI available on P1.6
 
-	P2DIR |= BIT1;
+	P1DIR |= BIT0;
 
 	UCB0CTL1 &= ~UCSWRST;   //Enable subsystem
 
@@ -168,12 +168,8 @@ void MoveCursorLineOne() {
 }
 
 void MoveCursorLineTwo() {
-	writeCommandByte(0x02); //Set cursor at home
-	int i;
-	for (i = 0; i < 40; i++) {
-		writeCommandByte(0x14); //0x14 shifts cursor to right once, and do this 40 times to get to next line
+	writeCommandByte(0xC0); //Set cursor at lower left spot
 	}
-}
 
 void writeString(char *string) {
 	int i;

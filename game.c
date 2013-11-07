@@ -18,6 +18,8 @@
 #define FALSE 0
 #define GAMEOVER 0
 #define PLAYON 1
+#define SPACE 0x20
+#define ASTERISK 0x2A
 
 char initPlayer()
 {
@@ -27,16 +29,16 @@ char initPlayer()
 void clearPlayer(unsigned char position)
 {
 	writeCommandByte(position);
-	writeString(" ");
+	writeDataByte(SPACE);
 }
 
 void updatePlayer(unsigned char position)
 {
 	writeCommandByte(position);
-	writeString("*");
+	writeString(ASTERISK);
 }
 
-void movePlayer(unsigned char position, unsigned char direction)
+unsigned char movePlayer(unsigned char position, unsigned char direction)
 {
 	switch (direction) {
 			case UP:
@@ -67,6 +69,7 @@ void movePlayer(unsigned char position, unsigned char direction)
 				break;
 			}
 	updatePlayer(position);
+	return position;
 }
 
 
