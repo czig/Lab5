@@ -35,31 +35,24 @@ void clearPlayer(unsigned char position)
 void updatePlayer(unsigned char position)
 {
 	writeCommandByte(position);
-	writeString(ASTERISK);
+	writeDataByte(ASTERISK);
 }
 
 unsigned char movePlayer(unsigned char position, unsigned char direction)
 {
+	clearPlayer(position);
 	switch (direction) {
 			case UP:
 				position &= ~BIT6;
 				break;
 			case LEFT:
-				if (position > 0x80)
-				{
-					position--;
-				}
-				if (position > 0xC0)
+				if ((position & 0x0f) > 0)
 				{
 					position--;
 				}
 				break;
 			case RIGHT:
-				if (position < 0x87)
-				{
-					position++;
-				}
-				if (position < 0xC7)
+				if ((position & 0x0f) < 7)
 				{
 					position++;
 				}

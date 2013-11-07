@@ -43,18 +43,18 @@ void initSPI() {
 	P1SEL |= BIT6;
 	P1SEL2 |= BIT6;         //Make UCAOSSOMI available on P1.6
 
-	P1DIR |= BIT0;
+	P1DIR |= BIT4;
 
 	UCB0CTL1 &= ~UCSWRST;   //Enable subsystem
 
 }
 
 void set_SS_hi() {
-	P1OUT |= BIT0;
+	P1OUT |= BIT4;
 }
 
 void set_SS_lo() {
-	P1OUT &= ~BIT0;
+	P1OUT &= ~BIT4;
 }
 
 void LCDinit() {

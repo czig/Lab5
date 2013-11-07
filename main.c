@@ -47,41 +47,52 @@ void main(void) {
     __enable_interrupt();
 
 
+
     while(1)
     {
-    	//(timerflag ==1)
-    	//{
-    		//timerflag = 0;
-    		//count ++;
-    	//}
-    	//if(count >= 4)
-    	//{
-    		//TACTL &= ~TAIE;   //Disable timer interrupt
-    		//LCDclear();
-    		//gameover = TRUE;
-    		//MoveCursorLineOne();
-    		//writeString("Game");
-    		//MoveCursorLineTwo();
-    		//writeString("Over");
-    	//}
-    	//if(buttonflag ==1)
-    	//{
-    		//buttonflag = 0;
-    		//if(gameover == FALSE)
-    		//{
-    			//testAndRespondToButtonPush(BIT1);
-    			//testAndRespondToButtonPush(BIT2);
-    			//testAndRespondToButtonPush(BIT3);
-    			//testAndRespondToButtonPush(BIT4);
-    		//}
-    		//else
-    		//{
-    			//Start_Over(BIT1);
-    			//Start_Over(BIT2);
-    			//Start_Over(BIT3);
-    			//Start_Over(BIT4);
-    		//}
-    	//}
+    	if (timerflag ==1)
+    	{
+    		timerflag = 0;
+    		count ++;
+    	}
+    	if(count >= 4)
+    	{
+    		TACTL &= ~TAIE;   //Disable timer interrupt
+    		LCDclear();
+    	    gameover = TRUE;
+    		MoveCursorLineOne();
+    		writeString("Game    ");
+    		MoveCursorLineTwo();
+    		writeString("Over    ");
+    	}
+    	if(buttonflag == 1)
+    	{
+    		buttonflag = 0;
+    		if(gameover == FALSE)
+    		{
+    			testAndRespondToButtonPush(BIT1);
+    			testAndRespondToButtonPush(BIT2);
+    			testAndRespondToButtonPush(BIT3);
+    			testAndRespondToButtonPush(BIT4);
+    		}
+    		else
+    		{
+    			Start_Over(BIT1);
+    			Start_Over(BIT2);
+    			Start_Over(BIT3);
+    			Start_Over(BIT4);
+    		}
+    	}
+    	if(position == 0xC7)
+    	{
+    		TACTL &= ~TAIE;   //Disable timer interrupt
+    		LCDclear();
+    		gameover = TRUE;
+    		MoveCursorLineOne();
+    		writeString("You     ");
+    		MoveCursorLineTwo();
+    		writeString("Win     ");
+    	}
     }
 
 
@@ -137,7 +148,7 @@ void testAndRespondToButtonPush(char buttonToTest) //Have to edit this function
         if (buttonToTest & P2IES)
         {
             movePlayerforButtonPush(buttonToTest);
-            initTimer(); //might have to be clear timer
+            clearTimer(); //might have to be clear timer
         } else
         {
             debounce();
@@ -159,7 +170,7 @@ void Start_Over(char buttonToTest)
 	            position = initPlayer();
 	            clearPlayer(position);
 	            updatePlayer(position);
-	            initTimer(); //might have to be clear timer
+	            clearTimer(); //might have to be clear timer
 
 	        } else
 	        {
@@ -182,6 +193,6 @@ __interrupt void TIMER0_A1_ISR()
 #pragma vector = PORT2_VECTOR
 __interrupt void Port_2_ISR(void)
 {
-    P2IFG &= ~(BIT1|BIT2|BIT3|BIT4);                         // clear interrupt flags
+
     buttonflag = 1;
 }
