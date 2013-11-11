@@ -118,6 +118,7 @@ void main(void) {
 
 
 }
+
 /*********************************
  * Main.c embedded implementation
  *********************************/
@@ -207,7 +208,7 @@ __interrupt void Port_2_ISR(void)
 {
 		if(gameover == FALSE)
 		{
-			//Test all buttons to see what one was pushed if not in at end game condition
+			//Test all buttons to see what one was pushed if not in end game condition
 			testAndRespondToButtonPush(BIT1);
 			testAndRespondToButtonPush(BIT2);
 			testAndRespondToButtonPush(BIT3);
@@ -215,7 +216,7 @@ __interrupt void Port_2_ISR(void)
 		}
 		else
 		{
-			//Again, test all buttons to see if game should start over when at end game condition
+			//Again, test all buttons to see if game should start over when in end game condition
 			Start_Over(BIT1);
 			Start_Over(BIT2);
 			Start_Over(BIT3);
