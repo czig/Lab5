@@ -15,26 +15,27 @@
 #define DOWN 4
 #define TRUE 1
 #define FALSE 0
-#define GAMEOVER 0
-#define PLAYON 1
 
+//Configures Timer_A to count up and overflow,
+//which triggers the interrupt, every 0.5 seconds.
 void initTimer();
 
+//Enables communication with the buttons on the
+//geekbox. Calls a function from button.h then
+//configures the buttons to work with interrupts.
+void initButtons();
+
+//Sets position to starting position of 0x80
 char initPlayer ();
 
+//Writes a space (blank) to the current position
 void clearPlayer (unsigned char position);
 
+//Writes an asterisk to the current position
 void updatePlayer (unsigned char position);
 
+//Implements the game logic for a button push. Updates position based on current position and a button push.
 unsigned char movePlayer (unsigned char position, unsigned char direction);
-
-void clearTimer();
-
-void movePlayerforButtonPush(char buttonToTest);
-
-void testAndRespondToButtonPush(char buttonToTest);
-
-
 
 
 #endif
