@@ -178,7 +178,7 @@ void Start_Over(char buttonToTest)
 	            clearPlayer(position);
 	            updatePlayer(position);
 	            clearTimer();
-	            TACTL |= TAIE;
+	            TACTL |= TAIE; //Enable Timer_A interrupt
 
 	        } else //If interrupt was triggered on rising edge, no button press (release of button), so debounce
 	        {
