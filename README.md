@@ -5,6 +5,12 @@ Interrupts - "A Simple Game"
 
 This repository includes the files main.c, game.h, game.c, lcd.h, lcd.c, button.h, and button.c, which allow the MSP430 to interface with the Geekbox to implement a simple game. Game.h provides the functions required to implement the game, lcd.h provides the functions necessary to interface with the lcd, and button.h provides the functions required to interface with the buttons. The functions requiring the use of global variables are included in main.c
 
+##Grading
+
+ - Prelab ..................................5
+ - Required Functionality..................35
+ - B Functionality.........................10
+
 ##Operation of the Game: 
 
  - Required Functionality - The game displays an asterisk on the upper left display of the LCD. The player must use buttons 1-4 to move the asterisk to the lower right display of the LCD in under 2 seconds in order to win the game. The top button corresponds to UP, the next button corresponds to LEFT, the next button corresponds to RIGHT, and the bottom button corresponds to DOWN. Once the end game condition has been reached and the LCD reads "Game Over" or "You Win", a single button push will start the game over again.
